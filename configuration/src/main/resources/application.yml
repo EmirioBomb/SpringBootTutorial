@@ -1,0 +1,21 @@
+app:
+  name: SpringBootTutorial
+
+logging:
+  level:
+    # 项目工程的日志等级
+    # 若想详细查看启动时相关操作日志，可改为: trace
+    root: info
+
+    # logging.level.包.类 > logging.level.包 > logging.level.组 > logging.level.root
+    # 指定包/类的日志等级
+    com.emirio.configuration: info
+  file:
+    # 1. 建议使用 logging.file.name 而不用 logging.file.path，
+    # 2. 若同时使用name与path，则以name为准
+    # 3. 默认为相对路径，即当前工作空间根目录生成文件
+    # 4. 在当前工作目录下的logs目录下生成日志文件，name: logs/log.log
+    name: logs/log.log
+  # pattern:
+    # 控制台简易日志输出模板
+    # console: "%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %blue([%5level]) %green([%thread]) %cyan(%logger{36}:%line) %msg%n"
