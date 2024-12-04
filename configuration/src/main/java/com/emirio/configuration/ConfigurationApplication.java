@@ -36,8 +36,6 @@ public class ConfigurationApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ConfigurationApplication.class, args);
-        // 若未在logAppInfo方法中，手动赋值给 appName，该值一直为 null
-        log.warn("成功启动系统: {}", appName);
     }
 
     @PostConstruct
@@ -54,22 +52,18 @@ public class ConfigurationApplication {
         log.info("系统名称: {}", appConfig.getAppName());
         log.info("系统版本: {}", appConfig.getAppVersion());
         log.info("系统作者: {}", appConfig.getAuthor());
-        // 不推荐给静态变量赋值, 本次仅做测试
-        appName = appConfig.getAppName();
     }
 
     public void logAppProperties() {
         log.info("系统配置名称: {}", appProperties.getAppName());
         log.info("系统配置版本: {}", appProperties.getAppVersion());
         log.info("系统配置作者: {}", appProperties.getAppAuthor());
-        appName = appProperties.getAppName();
     }
 
     public void logAppConfigProperties() {
         log.info("系统配置类名称: {}", appConfigProperties.getName());
         log.info("系统配置类版本: {}", appConfigProperties.getVersion());
         log.info("系统配置类作者: {}", appConfigProperties.getAuthor());
-        appName = appConfigProperties.getName();
     }
 
 }
