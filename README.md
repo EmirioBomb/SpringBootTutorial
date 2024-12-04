@@ -180,3 +180,21 @@ public class ConfigurationApplication {
 对于主流 Spring Boot 项目：
 - 使用 **`@ConfigurationProperties`** 和 **`@Value`** 是最常见的处理配置的方式。
 - `@PropertySource` 较少用，但在处理非默认路径配置时仍有用武之地。
+
+### 3. Runner
+
+**定义**
+
+| 特性                 | `CommandLineRunner`                                   | `ApplicationRunner`                                   |
+|----------------------|-------------------------------------------------------|-----------------------------------------------------|
+| **接口定义**         | `public interface CommandLineRunner { void run(String... args); }` | `public interface ApplicationRunner { void run(ApplicationArguments args); }` |
+| **参数类型**         | 接受 `String... args` 参数（数组形式）。              | 接受 `ApplicationArguments` 对象（封装形式）。      |
+| **引入版本**         | Spring 4.0。                                           | Spring Boot 1.3。                                   |
+
+**区别**
+
+| 特性                   | `CommandLineRunner`                          | `ApplicationRunner`                          |
+|------------------------|----------------------------------------------|---------------------------------------------|
+| **参数类型**           | 原始的字符串数组，简单但灵活性有限。         | 封装的 `ApplicationArguments`，更方便解析。 |
+| **参数解析**           | 手动解析（例如拆分 `--key=value` 格式参数）。 | 提供解析方法，直接获取选项和非选项参数。    |
+| **适用场景**           | 简单的命令行任务。                          | 更复杂的参数处理任务。                      |
