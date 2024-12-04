@@ -3,6 +3,9 @@ app:
   version: 1.0.1
   author: emirio
 
+# 启动参数模拟值, 重复的选项参数对应的值会被汇总
+args: arg1,arg2,--port=8080,--port=9091,--active=true
+
 logging:
   level:
     # 项目工程的日志等级
