@@ -19,6 +19,6 @@ public class LogAppInfoCmdRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("成功启动系统: {}", appConfigProperties.getName());
+        log.info("成功启动系统CmdRunner: {}", appConfigProperties.getName());
     }
 }
