@@ -47,7 +47,7 @@ public class ConfigurationApplication {
 }
 ```
 
-#### 配置
+#### application.yml 配置
 
 ```yaml
 logging:
@@ -59,8 +59,9 @@ logging:
     name: logs/log.log
 ```
 
-### 2. @Value
-#### 配置
+### 2. 配置注解
+#### 2.1 @Value
+`application.yml配置`
 ```yaml
 app:
   name: SpringBootTutorial
@@ -93,10 +94,10 @@ public void initInfo() {
 1. Spring 会在对象实例化后，通过反射为实例字段注入值，而 static 字段不属于实例，属于类本身，Spring 无法直接处理。
 2. 静态字段在类加载时就初始化，而 Spring 容器可能尚未完全启动，导致无法提供配置值。
 
-### 3. @ConfigurationProperties
+#### 2.2 @ConfigurationProperties
 `注意点`
 1. 使用该注解前提是 类被标记为一个 Spring 的组件，使其被 Spring 容器管理，如 @Component, @Service 等
-`方法1:`
+   `方法1:`
 ```java
 @Component
 @ConfigurationProperties(prefix = "app")
@@ -140,7 +141,7 @@ public class AppConfigProperties {
 }
 ```
 
-### @PropertySource
+#### 2.3 @PropertySource
 > `@PropertySource` 并非必须以 `classpath:` 开头，但推荐显式指定，以减少路径不明确的问题。如果文件在 `src/main/resources` 中，使用 `classpath:` 前缀是最佳实践。
 
 
@@ -165,7 +166,7 @@ public class ConfigurationApplication {
 | **相对路径**       | `custom.properties`           | 从当前工作目录加载文件（可能是项目根目录，通常不推荐直接使用相对路径） |
 | **绝对文件路径**   | `file:/path/to/file.properties`| 从文件系统中的绝对路径加载                                             |
 
-### 结论
+#### 2.4 结论
 
 | **注解**                 | **适用场景**                                 | **优缺点**                                                                 |
 |---------------------------|---------------------------------------------|-----------------------------------------------------------------------------|
