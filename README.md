@@ -1,6 +1,20 @@
 # SpringBootTutorial
 > SpringBoot tutorial project
 
+- [SpringBootTutorial](#springboottutorial)
+   - [Basic](#basic)
+      - [1. 日志](#1-日志)
+         - [添加依赖](#添加依赖)
+         - [使用](#使用)
+         - [application.yml 配置](#applicationyml-配置)
+      - [2. 配置注解](#2-配置注解)
+         - [2.1 @Value](#21-value)
+         - [2.2 @ConfigurationProperties](#22-configurationproperties)
+         - [2.3 @PropertySource](#23-propertysource)
+         - [2.4 结论](#24-结论)
+      - [3. Runner](#3-runner)
+
+
 ## Basic
 ### 1. 日志
 > 添加日志 **@Slf4j** 相关配置
@@ -198,3 +212,28 @@ public class ConfigurationApplication {
 | **参数类型**           | 原始的字符串数组，简单但灵活性有限。         | 封装的 `ApplicationArguments`，更方便解析。 |
 | **参数解析**           | 手动解析（例如拆分 `--key=value` 格式参数）。 | 提供解析方法，直接获取选项和非选项参数。    |
 | **适用场景**           | 简单的命令行任务。                          | 更复杂的参数处理任务。                      |
+
+**ApplicationRunner高级用法**
+
+```yaml
+# 启动参数模拟值, 重复的选项参数对应的值会被汇总
+args: arg1,arg2,--port=8080,--port=9091,--active=true
+```
+
+```java
+@Value("${args}")
+private String[] args;  // 模拟系统参数列表
+
+@Override
+public void run(ApplicationArguments args) throws Exception {
+    log.info("成功启动系统AppRunner: {}", appConfigProperties.getName());
+    // 此处为模拟启动参数
+    // 在 Lambda 表达式中，无法直接使用非 final 类型的局部变量（如 args），这是因为 Lambda 捕获外部变量时要求它们是 final 或者等效于 final
+    final ApplicationArguments appArgs = new DefaultApplicationArguments(this.args);
+    log.info("系统启动AppRunner参数列表为: {}", Arrays.toString(appArgs.getSourceArgs()));
+    // 遍历选项参数
+    log.info("系统启动的非选项参数列表为: {}", appArgs.getNonOptionArgs());
+    log.info("系统启动的选项参数列表为: {}", appArgs.getOptionNames());
+    appArgs.getOptionNames().forEach(key -> log.info("选项参数: {}, 值: {}", key, appArgs.getOptionValues(key)));
+}
+```
