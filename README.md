@@ -96,6 +96,7 @@ public void initInfo() {
 ### 3. @ConfigurationProperties
 `注意点`
 1. 使用该注解前提是 类被标记为一个 Spring 的组件，使其被 Spring 容器管理，如 @Component, @Service 等
+`方法1:`
 ```java
 @Component
 @ConfigurationProperties(prefix = "app")
@@ -106,12 +107,35 @@ public class AppConfigProperties {
 }
 ```
 
-2. 类必须有 Setter 方法
+`方法2:`
 ```java
+@Slf4j
+@SpringBootApplication
+// 主程序使用 EnableConfigurationProperties 添加指定类
+@EnableConfigurationProperties(AppConfigProperties.class)
+public class ConfigurationApplication {...}
+
+// 配置类可不使用 @Component 等
+@ConfigurationProperties(prefix = "app")
 @Setter
 public class AppConfigProperties {
     private String name;
     private String version;
     private String author;
+```
+
+2. 类必须有 Setter 方法
+```java
+// Lombok可直接使用 @Setter
+@Setter
+public class AppConfigProperties {
+    private String name;
+    private String version;
+    private String author;
+
+    // 未用 Lombok 直接生成 setter 方法, 内部 setter 会覆盖 Lombok @Setter
+    public void setName(String name) {
+        this.name = name;
+    }
 }
 ```
