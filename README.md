@@ -52,6 +52,7 @@ public class ConfigurationApplication {
 ```yaml
 logging:
   level:
+    # 若想隐藏或禁用日志，可全局调整日志等级为: error, fatal
     root: info
     com.emirio.configuration: info
   file:
@@ -67,6 +68,7 @@ app:
 ```
 
 ```java
+// @Value 不支持静态字段注入，但不会阻止程序执行，会有对应提醒
 @Value("${app.name}")
 public static String _appName;
 

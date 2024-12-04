@@ -1,11 +1,13 @@
 app:
   name: SpringBootTutorial
   version: 1.0.1
+  author: emirio
 
 logging:
   level:
     # 项目工程的日志等级
     # 若想详细查看启动时相关操作日志，可改为: trace
+    # 若想不输出日志，可适当调整等级如: error, fatal
     root: info
 
     # logging.level.包.类 > logging.level.包 > logging.level.组 > logging.level.root
