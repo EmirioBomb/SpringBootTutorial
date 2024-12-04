@@ -139,3 +139,43 @@ public class AppConfigProperties {
     }
 }
 ```
+
+### @PropertySource
+> `@PropertySource` 并非必须以 `classpath:` 开头，但推荐显式指定，以减少路径不明确的问题。如果文件在 `src/main/resources` 中，使用 `classpath:` 前缀是最佳实践。
+
+
+```properties
+#environment.properties 配置文件
+jdk.version=1.8
+```
+
+```java
+// 指定配置文件路径 
+@PropertySource("classpath:environment.properties")
+public class ConfigurationApplication {
+    // 根据 properties 文件中获取配置信息
+    @Value("${jdk.version}")
+    private String jdkVersion;
+}
+```
+
+| **路径类型**       | **格式**                        | **解释**                                                                 |
+|--------------------|--------------------------------|-------------------------------------------------------------------------|
+| **类路径**         | `classpath:custom.properties` | 从类路径加载，例如 `src/main/resources`                                |
+| **相对路径**       | `custom.properties`           | 从当前工作目录加载文件（可能是项目根目录，通常不推荐直接使用相对路径） |
+| **绝对文件路径**   | `file:/path/to/file.properties`| 从文件系统中的绝对路径加载                                             |
+
+### 结论
+
+| **注解**                 | **适用场景**                                 | **优缺点**                                                                 |
+|---------------------------|---------------------------------------------|-----------------------------------------------------------------------------|
+| `@Value`                 | 注入单个配置值                              | 简单、直接，不适合复杂配置                                                  |
+| `@ConfigurationProperties` | 绑定一组属性值到类                         | 适合复杂配置结构，支持分组管理                                              |
+| `@PropertySource`        | 加载自定义 `properties` 文件                 | 适合非默认路径配置，不支持 `yaml`                                           |
+| `@Environment`           | 动态获取配置值                              | 灵活，但代码复杂度较高                                                     |
+| `@TestPropertySource`    | 测试环境下加载特定配置                      | 测试专用，用于覆盖默认配置                                                 |
+| `@ImportResource`        | 加载 XML 文件中的属性占位符配置              | 适合需要兼容 XML 配置的场景                                                |
+
+对于主流 Spring Boot 项目：
+- 使用 **`@ConfigurationProperties`** 和 **`@Value`** 是最常见的处理配置的方式。
+- `@PropertySource` 较少用，但在处理非默认路径配置时仍有用武之地。
