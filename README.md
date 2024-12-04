@@ -92,3 +92,26 @@ public void initInfo() {
 `注:`
 1. Spring 会在对象实例化后，通过反射为实例字段注入值，而 static 字段不属于实例，属于类本身，Spring 无法直接处理。
 2. 静态字段在类加载时就初始化，而 Spring 容器可能尚未完全启动，导致无法提供配置值。
+
+### 3. @ConfigurationProperties
+`注意点`
+1. 使用该注解前提是 类被标记为一个 Spring 的组件，使其被 Spring 容器管理，如 @Component, @Service 等
+```java
+@Component
+@ConfigurationProperties(prefix = "app")
+public class AppConfigProperties {
+    private String name;
+    private String version;
+    private String author;
+}
+```
+
+2. 类必须有 Setter 方法
+```java
+@Setter
+public class AppConfigProperties {
+    private String name;
+    private String version;
+    private String author;
+}
+```

@@ -1,6 +1,7 @@
 package com.emirio.configuration;
 
 import com.emirio.configuration.domain.config.AppConfig;
+import com.emirio.configuration.domain.properties.AppConfigProperties;
 import com.emirio.configuration.domain.properties.AppProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,10 +20,12 @@ public class ConfigurationApplication {
 
     private final AppConfig appConfig;
     private final AppProperties appProperties;
+    private final AppConfigProperties appConfigProperties;
 
-    public ConfigurationApplication(AppConfig appConfig, AppProperties appProperties) {
+    public ConfigurationApplication(AppConfig appConfig, AppProperties appProperties, AppConfigProperties appConfigProperties) {
         this.appConfig = appConfig;
         this.appProperties = appProperties;
+        this.appConfigProperties = appConfigProperties;
     }
 
     public static void main(String[] args) {
@@ -37,6 +40,7 @@ public class ConfigurationApplication {
         log.info("正在初始化静态系统名称: {}", appName);
         logAppInfo();
         logAppProperties();
+        logAppConfigProperties();
     }
 
     public void logAppInfo() {
@@ -52,6 +56,13 @@ public class ConfigurationApplication {
         log.info("系统配置版本: {}", appProperties.getAppVersion());
         log.info("系统配置作者: {}", appProperties.getAppAuthor());
         appName = appProperties.getAppName();
+    }
+
+    public void logAppConfigProperties() {
+        log.info("系统配置类名称: {}", appConfigProperties.getName());
+        log.info("系统配置类版本: {}", appConfigProperties.getVersion());
+        log.info("系统配置类作者: {}", appConfigProperties.getAuthor());
+        appName = appConfigProperties.getName();
     }
 
 }
