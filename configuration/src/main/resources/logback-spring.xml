@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
+
+    <!-- 引入 SpringBoot 默认的日志配置信息，该文件包含了 defaults.xml, file-appender.xml, console-appender.xml -->
+    <!-- 以版本: spring-boot-2.3.12.RELEASE.jar 为例，logback 配置信息可参照 org.springframework.boot.logging.logback.base.xml -->
+    <!-- <include resource="org/springframework/boot/logging/logback/base.xml"/> -->
+
+    <!-- 默认SpringBoot logback 配置 -->
+    <!-- 以版本: spring-boot-2.3.12.RELEASE.jar 为例，配置信息可参照 org.springframework.boot.logging.logback.defaults.xml -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- 控制台日志输出节点 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 读取 application.yml 中的 logback.file.name 作为日志文件名称 -->
+    <!-- <SpringProperty name="LOG_FILE" source="logback.file.name"/> -->
+
+    <!-- 文件日志输出节点 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <cleanHistoryOnStart>${LOG_FILE_CLEAN_HISTORY_ON_START:-false}</cleanHistoryOnStart>
+            <!-- 每天创建一个新的活动日志文件 -->
+            <!-- <fileNamePattern>${ROLLING_FILE_NAME_PATTERN:-${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz}</fileNamePattern> -->
+            <!-- 每周生成一个活动日志文件 -->
+            <fileNamePattern>${ROLLING_FILE_NAME_PATTERN:-${LOG_FILE}.%d{yyyy-ww}.%i.gz}</fileNamePattern>
+            <maxFileSize>${LOG_FILE_MAX_SIZE:-10MB}</maxFileSize>
+            <maxHistory>${LOG_FILE_MAX_HISTORY:-7}</maxHistory>
+            <totalSizeCap>${LOG_FILE_TOTAL_SIZE_CAP:-0}</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 项目默认日志输出等级 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+
+    <!-- 指明具体的包或类的日志输出级别，优先级高于 root -->
+    <logger name="com.emirio.configuration.runner.LogAppInfoAppRunner">
+        <level value="INFO"/>
+    </logger>
+    <logger name="com.emirio.configuration.runner.LogAppInfoCmdRunner">
+        <level value="INFO"/>
+    </logger>
+
+</configuration>

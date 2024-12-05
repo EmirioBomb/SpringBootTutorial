@@ -7,6 +7,8 @@
          - [添加依赖](#添加依赖)
          - [使用](#使用)
          - [application.yml 配置](#applicationyml-配置)
+         - [Logback](#logback)
+            - [配置](#配置)
       - [2. 配置注解](#2-配置注解)
          - [2.1 @Value](#21-value)
          - [2.2 @ConfigurationProperties](#22-configurationproperties)
@@ -71,6 +73,40 @@ logging:
     com.emirio.configuration: info
   file:
     name: logs/log.log
+```
+
+#### Logback
+
+**1. 优先级规则**
+- **`application.yaml` 的 `logging` 配置优先级更高**：  
+  Spring Boot 会先解析 `application.yaml` 中的 `logging` 配置，并将这些设置直接应用到日志系统。
+
+- **`logback-spring.xml` 是更具体的配置**：  
+  如果存在 `logback-spring.xml` 文件，Spring Boot 会使用它来定义更详细的日志记录规则，例如自定义 Appender 和 Logger。**但某些全局参数（如 `level` 和 `file`）可能会被 `application.yaml` 中的配置覆盖。**
+- 若同时存在 **`logback-spring.xml` 与 `logback.xml`**：logback.xml 优先级高于 logback-spring.xml
+
+##### 配置
+```yml
+# logback-spring.xml 日志配置管理
+logging:
+  # 手动指定 logback 配置
+  # config: classpath:logback.xml
+  config: classpath:logback-spring.xml
+  file:
+    name: logs/logback-spring.log
+    max-size: 100MB
+    max-history: 3
+    total-size-cap: 1GB
+    clean-history-on-start: false
+  level:
+    root: info
+    com.emirio.configuration: info
+
+# logback-spring.xml 通过配置动态指定日志文件
+# logback:
+#   file:
+#     # 自定义日志文件名称
+#     name: logs/custom-logback-spring.log
 ```
 
 ### 2. 配置注解

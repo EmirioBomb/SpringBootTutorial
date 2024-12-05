@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
+
+    <!-- 注: xml 自上而下读取，故优先声明的配置会覆盖下方相同的值 -->
+    <!-- logback 默认存储日志文件 -->
+    <!-- 若开启指定文件，会忽略 application.yml 中 loggin.config 的配置 -->
+    <!-- <property name="LOG_FILE" value="logs/logback.log"/> -->
+
+    <!-- 引入 SpringBoot 默认的日志配置信息，该文件包含了 defaults.xml, file-appender.xml, console-appender.xml -->
+    <!-- 以版本: spring-boot-2.3.12.RELEASE.jar 为例，logback 配置信息可参照 org.springframework.boot.logging.logback.base.xml -->
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <!-- 自定义具体日志等级配置 -->
+    <logger name="com.emirio.configuration">
+        <level value="INFO"/>
+    </logger>
+
+</configuration>
