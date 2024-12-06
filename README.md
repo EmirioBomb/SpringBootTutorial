@@ -109,6 +109,27 @@ logging:
 #     name: logs/custom-logback-spring.log
 ```
 
+#### 异步日志
+
+* **日志丢失:** 当应用程序在非正常退出时，异步日志可能尚未写入完全。
+* **延迟:** 异步日志可能导致稍微延迟的日志输出，这可能会影响调试的实时性。
+* **默认:** `ConsoleAppender` 和 `RollingFileAppender` 默认都是同步的。
+
+```xml
+ <!-- 异步写入文件配置，可提高日志TPS，一般更适用于高并发的生产环境或压测环境 -->
+<appender name="ASYNC-FILE" class="ch.qos.logback.classic.AsyncAppender">
+    <!-- 写入日志文件节点，一般无需处理控制台节点的异常 -->
+    <appender-ref ref="FILE"/>
+    <!-- discardingThreshold 设置为 0，表示即使队列达到最大容量，也不会丢弃任何日志（除非队列完全满了） -->
+    <!-- 从源代码 AsyncAppenderBase.class 中可知，默认值在-1时会丢弃日志 -->
+    <discardingThreshold>0</discardingThreshold>
+    <!-- 默认队列大小: 256 -->
+    <queueSize>1024</queueSize>
+    <!-- 当队列满时丢弃日志，虽一定程序上可提升性能，但会丢失部分日志，个人不建议开启 -->
+    <!-- <neverBlock>true</neverBlock> -->
+</appender>
+```
+
 ### 2. 配置注解
 #### 2.1 @Value
 `application.yml配置`
