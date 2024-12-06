@@ -17,6 +17,7 @@
          - [2.4 结论](#24-结论)
       - [3. Runner](#3-runner)
       - [4. Banner](#4-banner)
+      - [5. application 配置文件](#5-application-配置文件)
 
 
 ## Basic
@@ -317,3 +318,49 @@ application:
   version: 1.0.2
   formatted-version: v1.0.2
 ```
+
+### 5. application 配置文件
+
+**applicatioin配置文件命名方式:**
+
+* **`application.properties`**
+* **`application.yml`**
+* **`application.yaml`**
+
+```txt
+配置文件在项目中的位置如下:
+
+./
+├── config
+│   ├── application1.yml
+│   └── child
+│       └── application1.yml
+├── application.yml
+├── configuration
+│   ├── pom.xml
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   └── com
+│   │   │   │       └── emirio
+│   │   │   │           └── configuration
+│   │   │   │               ├── ConfigurationApplication.java
+│   │   │   └── resources
+│   │   │       ├── application.yml
+│   │   │       ├── banner.txt
+│   │   │       ├── config
+│   │   │       │   └── application.yml
+│   │   │       ├── environment.properties
+│   │   │       ├── logback-spring.xml
+│   │   │       └── logback.xml
+```
+
+> **加载顺序依次从上到下，所有文件都会加载，高优先级的内容会覆盖低优先级的内容**
+
+|位置|优先级 (数字越小优先级越高)|
+|--|:--:|
+|./config/application.yml|1|
+|./config/child/application.yml|2|
+|./application.yml|3|
+|./configuration/src/main/resources/config/application.yml|4|
+|./configuration/src/main/resources/application.yml|5|
