@@ -9,12 +9,14 @@
          - [application.yml 配置](#applicationyml-配置)
          - [Logback](#logback)
             - [配置](#配置)
+         - [异步日志](#异步日志)
       - [2. 配置注解](#2-配置注解)
          - [2.1 @Value](#21-value)
          - [2.2 @ConfigurationProperties](#22-configurationproperties)
          - [2.3 @PropertySource](#23-propertysource)
          - [2.4 结论](#24-结论)
       - [3. Runner](#3-runner)
+      - [4. Banner](#4-banner)
 
 
 ## Basic
@@ -293,4 +295,25 @@ public void run(ApplicationArguments args) throws Exception {
     log.info("系统启动的选项参数列表为: {}", appArgs.getOptionNames());
     appArgs.getOptionNames().forEach(key -> log.info("选项参数: {}, 值: {}", key, appArgs.getOptionValues(key)));
 }
+```
+
+### 4. Banner
+
+**`Banner 相关配置`**
+
+```yml
+# application.yml 配置文件
+
+spring:
+  main:
+    # off 关闭
+    banner-mode: console
+
+# 通过 banner 输出相关信息
+application:
+  title: SpringBootTutorial
+  group: TOE
+  author: emirio
+  version: 1.0.2
+  formatted-version: v1.0.2
 ```

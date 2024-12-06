@@ -46,3 +46,16 @@ logging:
 #   file:
 #     # 自定义日志文件名称
 #     name: logs/custom-logback-spring.log
+
+spring:
+  main:
+    # off 关闭
+    banner-mode: console
+
+# 通过 banner 输出相关信息
+application:
+  title: SpringBootTutorial
+  group: TOE
+  author: emirio
+  version: 1.0.2
+  formatted-version: v1.0.2
