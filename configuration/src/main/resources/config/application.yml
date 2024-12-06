@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    # 激活指定环境
+    active: test
+
+# banner 自定义信息
+application:
+  title: SpringBootTutorial
+  group: TOE
+  author: emirio
+  version: 1.0.2
+  formatted-version: v${application.version}
+
+# logback各环境通用日志配置
+logging:
+  # 手动指定 logback-spring 配置，配置更灵活，功能更强大
+  config: classpath:logback-spring.xml
+  level:
+    root: info
+  file:
+    name: logs/logback-spring-${spring.profiles.active:default}.log
+    max-size: 100MB
+    max-history: 7
+    total-size-cap: 1GB
+    clean-history-on-start: true

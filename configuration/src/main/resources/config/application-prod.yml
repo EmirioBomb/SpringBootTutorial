@@ -1,0 +1,9 @@
+# logback日志配置
+logging:
+  level:
+    root: info
+  file:
+    max-size: 200MB
+    max-history: 30
+    total-size-cap: 2GB
+    clean-history-on-start: true

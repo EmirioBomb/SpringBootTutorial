@@ -1,61 +1,8 @@
+# 自定义应用信息
 app:
-  name: SpringBootTutorial
-  version: 1.0.1
-  author: emirio
+  name: ${application.title}
+  version: ${application.version}
+  author: ${application.version}
 
 # 启动参数模拟值, 重复的选项参数对应的值会被汇总
 args: arg1,arg2,--port=8080,--port=9091,--active=true
-
-# logging:
-#   level:
-#     # 项目工程的日志等级
-#     # 若想详细查看启动时相关操作日志，可改为: trace
-#     # 若想不输出日志，可适当调整等级如: error, fatal
-#     root: info
-#
-#     # logging.level.包.类 > logging.level.包 > logging.level.组 > logging.level.root
-#     # 指定包/类的日志等级
-#     com.emirio.configuration: info
-#   file:
-#     # 1. 建议使用 logging.file.name 而不用 logging.file.path，
-#     # 2. 若同时使用name与path，则以name为准
-#     # 3. 默认为相对路径，即当前工作空间根目录生成文件
-#     # 4. 在当前工作目录下的logs目录下生成日志文件，name: logs/log.log
-#     name: logs/log.log
-#   # pattern:
-#     # 控制台简易日志输出模板
-#     # console: "%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %blue([%5level]) %green([%thread]) %cyan(%logger{36}:%line) %msg%n"
-
-# logback-spring.xml 日志配置管理
-logging:
-  # 手动指定 logback 配置
-  # config: classpath:logback.xml
-  config: classpath:logback-spring.xml
-  file:
-    name: logs/logback-spring.log
-    max-size: 100MB
-    max-history: 3
-    total-size-cap: 1GB
-    clean-history-on-start: false
-  level:
-    root: info
-    com.emirio.configuration: info
-
-# logback-spring.xml 通过配置动态指定日志文件
-# logback:
-#   file:
-#     # 自定义日志文件名称
-#     name: logs/custom-logback-spring.log
-
-spring:
-  main:
-    # off 关闭
-    banner-mode: console
-
-# 通过 banner 输出相关信息
-application:
-  title: SpringBootTutorial
-  group: TOE
-  author: emirio
-  version: 1.0.2
-  formatted-version: v1.0.2
