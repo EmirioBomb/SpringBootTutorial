@@ -7,8 +7,8 @@ ${AnsiColor.BRIGHT_GREEN}
         \/|__|                 \//_____/        \/                                                            \/
 ${AnsiColor.BRIGHT_YELLOW}
 
-:: Group       ::       ${application.group}
-:: Author      ::       ${application.author}
-:: Title       ::       ${application.title}
-:: Version     ::       ${application.formatted-version}
-:: Spring Boot ::       ${spring-boot.version}
+Group       :: ${application.group}
+Author      :: ${application.author}
+Title       :: ${application.title}
+Version     :: ${application.formatted-version}
+Spring Boot :: ${spring-boot.version}
