@@ -10,6 +10,7 @@
          - [Logback](#logback)
             - [配置](#配置)
          - [异步日志](#异步日志)
+            - [动态异步日志](#动态异步日志)
       - [2. 配置注解](#2-配置注解)
          - [2.1 @Value](#21-value)
          - [2.2 @ConfigurationProperties](#22-configurationproperties)
@@ -131,6 +132,38 @@ logging:
     <!-- 当队列满时丢弃日志，虽一定程序上可提升性能，但会丢失部分日志，个人不建议开启 -->
     <!-- <neverBlock>true</neverBlock> -->
 </appender>
+```
+
+##### 动态异步日志
+> **根据不同环境，决定是否启用异步日志节点**
+
+```xml
+<!-- 异步写入文件配置，可提高日志TPS，一般更适用于高并发的生产环境或压测环境 -->
+<!-- 通过 SpringProfile 配置，根据不同环境开启异步日志 -->
+<springProfile name="dev,prod">
+    <!-- 异步写入文件配置，可提高日志TPS，一般更适用于高并发的生产环境或压测环境 -->
+    <appender name="ASYNC-FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 写入日志文件节点，一般无需处理控制台节点的异常 -->
+        <appender-ref ref="FILE"/>
+        <!-- discardingThreshold 设置为 0，表示即使队列达到最大容量，也不会丢弃任何日志（除非队列完全满了） -->
+        <!-- 从源代码 AsyncAppenderBase.class 中可知，默认值在-1时会丢弃日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 默认队列大小: 256 -->
+        <queueSize>1024</queueSize>
+        <!-- 当队列满时丢弃日志，虽一定程序上可提升性能，但会丢失部分日志，个人不建议开启 -->
+        <!-- <neverBlock>true</neverBlock> -->
+    </appender>
+</springProfile>
+
+<!-- 日志节点 -->
+<root level="INFO">
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="FILE" />
+    <!-- 只有生产、压测环境开启异步日志 -->
+    <springProfile name="dev,prod">
+        <appender-ref ref="ASYNC-FILE" />
+    </springProfile>
+</root>
 ```
 
 ### 2. 配置注解
@@ -306,17 +339,17 @@ public void run(ApplicationArguments args) throws Exception {
 # application.yml 配置文件
 
 spring:
-  main:
-    # off 关闭
-    banner-mode: console
+   main:
+      # off 关闭
+      banner-mode: console
 
 # 通过 banner 输出相关信息
 application:
-  title: SpringBootTutorial
-  group: TOE
-  author: emirio
-  version: 1.0.2
-  formatted-version: v1.0.2
+   title: SpringBootTutorial
+   group: TOE
+   author: emirio
+   version: 1.0.2
+   formatted-version: v1.0.2
 ```
 
 ### 5. application 配置文件
