@@ -6,9 +6,11 @@ ${AnsiColor.BRIGHT_GREEN}
 /_______  /   __/|__|  |__|___|  /\___  /|______  /\____/ \____/|__|  |____| |____/ |__|  \____/|__|  |__(____  /____/
         \/|__|                 \//_____/        \/                                                            \/
 ${AnsiColor.BRIGHT_YELLOW}
-
-Group       :: ${application.group}
-Author      :: ${application.author}
-Title       :: ${application.title}
-Version     :: ${application.formatted-version}
-Spring Boot :: ${spring-boot.version}
+:: Group       :: ${application.group}
+:: Author      :: ${application.author}
+:: Title       :: ${application.title}
+:: Version     :: ${application.formatted-version}
+:: Spring Boot :: ${spring-boot.version}
+:: JDK Version :: ${java.version}
+:: Profile     :: ${spring.profiles.active:default}
+${AnsiColor.BRIGHT_WHITE}
